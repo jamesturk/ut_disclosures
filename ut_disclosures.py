@@ -37,6 +37,7 @@ class Person:
 class Entity:
     id: str
     source: str
+    type: str = ""
     name: str = ""
     phone: str = ""
     address1: str = ""
@@ -48,6 +49,7 @@ class Entity:
     date_created: str = ""
     ballot_proposition: str = ""
     ballot_position: str = ""
+    affiliated_organization: str = ""
     associated_people: list[Person] = field(default_factory=list)
 
 
@@ -156,11 +158,25 @@ class EntityMetadata(HtmlPage):
         "Party": "party",
         "District #": "district_number",
         "County of Election": "county",
+        "Organization": "affiliated_organization",
+    }
+
+    type_mapping = {
+        "Political Issues Commitee Statement of Organization": "Political Issues Committee",
+        "Financial Disclosures Registration for Corporation": "Corporation",
+        "Political Action Committee Statement of Organization": "Political Action Committee",
+        "Candidates & Office Holders Statement of Organization": "Candidates & Office Holders",
+        "Financial Disclosures Registration for Political Party": "Political Party",
+        "Financial Disclosures Registration for Independent Expenditures": "Independent Expenditures",
+        "Financial Disclosures Registration for Electioneering": "Electioneering",
     }
 
     def process_page(self):
         # carry over fields from directory page
         entity = Entity(id=self.input, source=self.source.url)
+
+        h1 = CSS("h1").match_one(self.root).text_content()
+        entity.type = self.type_mapping[h1]
 
         for fieldset in CSS("fieldset").match(self.root):
             # collect all the data
@@ -177,6 +193,8 @@ class EntityMetadata(HtmlPage):
                 "PIC Information",
                 "Party Information",
                 "Candidate Information",
+                "Independent Expenditures Information",
+                "Electioneer Information",
             ):
                 for k, v in data.items():
                     setattr(entity, k, v)
