@@ -35,7 +35,8 @@ class Person:
 
 @dataclass
 class Entity:
-    id: str
+    folder_id: str
+    entity_id: str
     source: str
     type: str = ""
     name: str = ""
@@ -173,7 +174,11 @@ class EntityMetadata(HtmlPage):
 
     def process_page(self):
         # carry over fields from directory page
-        entity = Entity(id=self.input, source=self.source.url)
+        entity = Entity(
+            folder_id=self.input,
+            source=self.source.url,
+            entity_id=self.source.url.split("/")[-1],
+        )
 
         h1 = CSS("h1").match_one(self.root).text_content()
         entity.type = self.type_mapping[h1]
@@ -198,9 +203,8 @@ class EntityMetadata(HtmlPage):
             ):
                 for k, v in data.items():
                     setattr(entity, k, v)
-            elif (
-                legend.startswith("Information about")
-                or legend.startswith("Personal Campaign Committee")
+            elif legend.startswith("Information about") or legend.startswith(
+                "Personal Campaign Committee"
             ):
                 person = Person(**data)
                 entity.associated_people.append(person)
