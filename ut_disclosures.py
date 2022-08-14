@@ -37,6 +37,7 @@ class Person:
 class Entity:
     id: str
     source: str
+    name: str = ""
     phone: str = ""
     address1: str = ""
     address2: str = ""
