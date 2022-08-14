@@ -14,7 +14,7 @@ The CLI consists of several subcommands:
 
 ### get-disclosures
 
-Usage: `poetry run ut_disclosures.py get-disclosures ENTITY_ID YEAR`
+Usage: `poetry run ./ut_disclosures.py get-disclosures ENTITY_ID YEAR`
 
   Get disclosures by entity_id and year.
 
@@ -23,13 +23,13 @@ Usage: `poetry run ut_disclosures.py get-disclosures ENTITY_ID YEAR`
 
 ### get-entities
 
-Usage: `poetry run ut_disclosures.py get-entities`
+Usage: `poetry run ./ut_disclosures.py get-entities`
 
   Get all entities & writes them to ut_entities.csv.
 
 ### get-registrations
 
-Usage: `poetry run ut_disclosures.py get-registration [OPTIONS] ENTITY_ID`
+Usage: `poetry run ./ut_disclosures.py get-registration [OPTIONS] ENTITY_ID`
 
   Get entity registration by id.
 
@@ -37,7 +37,7 @@ Usage: `poetry run ut_disclosures.py get-registration [OPTIONS] ENTITY_ID`
 
 ### get-all-registrations
 
-Usage: `poetry run ut_disclosures.py get-all-registrations [OPTIONS]`
+Usage: `poetry run ./ut_disclosures.py get-all-registrations [OPTIONS]`
 
   Get all entity registrations.
 

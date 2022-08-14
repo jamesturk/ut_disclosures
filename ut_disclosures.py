@@ -204,7 +204,7 @@ def get_entities():
     """
     Get all entities & writes them to ut_entities.csv.
     """
-    filename = f"ut_entities.csv"
+    filename = f"data/ut_entities.csv"
     seen = set()
     with open(filename, "w") as f:
         writer = csv.DictWriter(f, ("entity_id", "entity_type", "name"))
@@ -218,7 +218,7 @@ def get_entities():
 
 
 def _write_registration_json(entity_id, skip_if_exists=False):
-    filename = f"ut_registration_{entity_id}.json"
+    filename = f"data/ut_registration_{entity_id}.json"
     if skip_if_exists and Path(filename).exists():
         print(f"{filename} already exists")
     else:
@@ -247,7 +247,7 @@ def get_all_registrations():
 
     Writes a single JSON file per entity.
     """
-    with open("ut_entities.csv") as f:
+    with open("data/ut_entities.csv") as f:
         for row in csv.DictReader(f):
             print(row)
             _write_registration_json(row["entity_id"], skip_if_exists=True)
@@ -262,7 +262,7 @@ def get_disclosures(entity_id, year):
 
     Writes a single CSV per year, using the same fieldnames disclosures.utah.gov does.
     """
-    filename = f"ut_disclosures_{entity_id}_{year}.csv"
+    filename = f"data/ut_disclosures_{entity_id}_{year}.csv"
     fieldnames = (
         "CORP",
         "REPORT",
