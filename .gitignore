@@ -1,2 +1,5 @@
 *.pyc
 .tool-versions
+/data
+*.csv
+.DS_Store
